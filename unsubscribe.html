@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Unsubscribe &mdash; LogOut</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0f0c">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #0b0f0c;
+      color: #e6e6e6;
+      line-height: 1.55;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+    .top-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #226340 0%, #2D8050 50%, #ff8c2a 100%);
+    }
+    main {
+      flex: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 40px 24px 32px;
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .logo-row img {
+      width: 32px; height: 32px;
+      border-radius: 7px;
+    }
+    .logo-row span {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: #f4f1e8;
+    }
+    h1 {
+      font-size: clamp(24px, 4vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      color: #f4f1e8;
+      margin: 0 0 8px;
+    }
+    .sub {
+      font-size: 14px;
+      color: rgba(244, 241, 232, 0.6);
+      margin: 0 0 28px;
+    }
+    .label {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(244, 241, 232, 0.42);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 0 0 10px;
+    }
+    .reasons {
+      background: #121a14;
+      border: 1px solid #1f2b22;
+      border-radius: 14px;
+      margin-bottom: 28px;
+    }
+    .reason {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      cursor: pointer;
+      border-top: 1px solid #1f2b22;
+      transition: background 120ms ease;
+    }
+    .reason:first-child { border-top: 0; }
+    .reason:hover { background: rgba(255, 255, 255, 0.02); }
+    .reason input { accent-color: #ff8c2a; transform: scale(1.15); margin: 0; }
+    .reason label {
+      flex: 1;
+      font-size: 14px;
+      color: #f4f1e8;
+      cursor: pointer;
+      user-select: none;
+    }
+    textarea {
+      width: 100%;
+      min-height: 84px;
+      background: #121a14;
+      border: 1px solid #1f2b22;
+      border-radius: 14px;
+      padding: 12px;
+      color: #f4f1e8;
+      font: inherit;
+      font-size: 14px;
+      resize: vertical;
+      margin-bottom: 24px;
+      outline: none;
+    }
+    textarea:focus { border-color: #2D8050; }
+    button.submit {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: #ffffff;
+      background: #ff8c2a;
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: opacity 120ms ease;
+    }
+    button.submit:disabled { opacity: 0.4; cursor: not-allowed; }
+    .error, .success {
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      margin: 0 0 16px;
+    }
+    .error   { background: rgba(255, 140, 42, 0.10); border: 1px solid rgba(255, 140, 42, 0.32); color: #ff8c2a; }
+    .success { background: rgba(127, 191, 127, 0.10); border: 1px solid rgba(127, 191, 127, 0.32); color: #7fbf7f; }
+    footer {
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(244, 241, 232, 0.36);
+    }
+    footer a {
+      color: rgba(244, 241, 232, 0.55);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    footer a:hover { color: #7fbf7f; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <main>
+    <div class="logo-row">
+      <img src="https://logout-email.logoutapp.workers.dev/assets/logo.png" alt="LogOut">
+      <span>LogOut</span>
+    </div>
+
+    <div id="form-wrap">
+      <h1>Unsubscribe from LogOut emails.</h1>
+      <p class="sub">Pick a reason &mdash; helps us improve what we send. You'll stop receiving the weekly and re-engagement emails immediately.</p>
+
+      <div id="error-box" class="error" style="display:none;"></div>
+
+      <p class="label">Why are you unsubscribing?</p>
+      <div class="reasons" id="reasons">
+        <!-- populated via JS so we can default-select the first option -->
+      </div>
+
+      <p class="label">Anything else? (optional)</p>
+      <textarea id="comment" placeholder="Tell us more if you'd like…"></textarea>
+
+      <button class="submit" id="submit-btn">Unsubscribe</button>
+    </div>
+
+    <div id="success-wrap" style="display:none;">
+      <div class="success">
+        <strong>You're unsubscribed.</strong>
+        We won't send you any more weekly or re-engagement emails. You'll still receive transactional messages (account verification, deletion confirmations).
+      </div>
+      <p class="sub" style="margin-top:20px;">
+        Changed your mind? Open LogOut and head to Settings &mdash; we'll add a resubscribe option there in a future update.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://logoutapp.net">Home</a>
+    &middot;
+    <a href="https://logoutapp.net/terms.html">Terms</a>
+    &middot;
+    <a href="https://logoutapp.net/privacy.html">Privacy</a>
+  </footer>
+
+  <script>
+    // ── Wiring ─────────────────────────────────────────────────────────────
+    // The Worker route accepts {token, reason, comment} where `token` is the
+    // ?t=... query string parameter the email footer link carried in.
+
+    const REASONS = [
+      "Too many emails",
+      "Not relevant to me",
+      "I no longer use LogOut",
+      "I never signed up",
+      "Privacy concerns",
+      "Other",
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const token  = params.get("t") || "";
+
+    // Render reason radios with the first option pre-selected so submit
+    // is always enabled.
+    const reasonsEl = document.getElementById("reasons");
+    REASONS.forEach((r, i) => {
+      const id = `reason-${i}`;
+      const row = document.createElement("div");
+      row.className = "reason";
+      row.innerHTML =
+        `<input type="radio" name="reason" id="${id}" value="${r}"${i === 0 ? " checked" : ""}>` +
+        `<label for="${id}">${r}</label>`;
+      row.addEventListener("click", () => {
+        document.getElementById(id).checked = true;
+      });
+      reasonsEl.appendChild(row);
+    });
+
+    const errorBox  = document.getElementById("error-box");
+    const formWrap  = document.getElementById("form-wrap");
+    const successEl = document.getElementById("success-wrap");
+    const btn       = document.getElementById("submit-btn");
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = "block";
+    }
+
+    // If the token is missing entirely, this page was opened directly rather
+    // than via an email link — there's nothing we can do without it.
+    if (!token) {
+      showError("This page can only be opened from the unsubscribe link in your email.");
+      btn.disabled = true;
+    }
+
+    btn.addEventListener("click", async () => {
+      btn.disabled    = true;
+      btn.textContent = "Unsubscribing…";
+      errorBox.style.display = "none";
+
+      const reason  = document.querySelector('input[name="reason"]:checked')?.value || "";
+      const comment = document.getElementById("comment").value;
+
+      try {
+        const res = await fetch("https://logout-email.logoutapp.workers.dev/unsubscribe", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({ token, reason, comment }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Request failed (HTTP ${res.status})`);
+        }
+        formWrap.style.display  = "none";
+        successEl.style.display = "block";
+      } catch (err) {
+        showError(err.message || "Something went wrong. Please try again.");
+        btn.disabled    = false;
+        btn.textContent = "Unsubscribe";
+      }
+    });
+  </script>
+
+</body>
+</html>
