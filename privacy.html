@@ -38,7 +38,7 @@
 
 <div class="box">
   <h1>Privacy Policy for LogOut</h1>
-  <p><strong>Last updated:</strong> <span class="highlight">15 May 2026</span></p>
+  <p><strong>Last updated:</strong> <span class="highlight">8 June 2026</span></p>
   <p>LogOut is a habit-building iOS app designed to help you reduce mindless scrolling by locking your apps and requiring you to walk to unlock them. This policy explains what data we collect, why, and how it is protected.</p>
 </div>
 
@@ -68,10 +68,20 @@
     <tr><td>Loop broken</td><td>Whether you successfully walked out</td></tr>
     <tr><td>Device</td><td>"iPhone" — no device identifiers are stored</td></tr>
   </table>
-  <p style="margin-top:12px;"><strong>2.3 Local-only data (never leaves your device)</strong></p>
+  <p style="margin-top:12px;"><strong>2.3 App preferences (synced to your account if signed in)</strong></p>
+  <p>When you are signed in, the following settings are also stored in Firestore so they can be restored automatically when you sign in on a new or reinstalled device:</p>
+  <table>
+    <tr><th>Field</th><th>Description</th></tr>
+    <tr><td>Step goal</td><td>Your target steps per unlock walk (10–100)</td></tr>
+    <tr><td>Session duration</td><td>How long your countdown timer is set to (minutes)</td></tr>
+    <tr><td>Mode preference</td><td>Whether Instant Lock or Standard mode is active</td></tr>
+    <tr><td>Daily scroll estimate</td><td>Your self-reported estimate of daily scroll time, entered during onboarding</td></tr>
+    <tr><td>Selected goals</td><td>The habit goals you chose during onboarding (e.g. "Reading", "Exercise", "Focus"). Stored as a comma-separated list of goal labels</td></tr>
+  </table>
+  <p style="margin-top:12px;"><strong>2.4 Local-only data (never leaves your device)</strong></p>
   <ul>
     <li>Session history is stored locally for up to 90 days using Apple's standard UserDefaults</li>
-    <li>App settings (session duration, strict mode preference, trial status)</li>
+    <li>App settings and preferences are stored locally at all times; a copy is additionally synced to Firebase when you are signed in (see §2.3 above)</li>
     <li>Focus Rules preferences — which app categories you have chosen to block (e.g. Social, Entertainment, Games). Stored as an opaque Apple-issued token in an iOS App Group shared between the App and its background Screen Time extension. These tokens are processed entirely on-device and are never transmitted to us</li>
     <li>Firebase authentication tokens — stored securely in UserDefaults for session management</li>
   </ul>
@@ -150,6 +160,7 @@
   <ul>
     <li><strong>Local session history</strong> — kept for 90 days on your device, then automatically deleted</li>
     <li><strong>Cloud session data</strong> — retained in Firestore as long as your account exists</li>
+    <li><strong>Cloud app preferences</strong> — retained in Firestore as long as your account exists; deleted when you request account deletion</li>
     <li><strong>Account data</strong> — retained until you request deletion</li>
   </ul>
   <p>To request full deletion of your account and all associated data, contact us at <a href="mailto:support@logoutapp.net">support@logoutapp.net</a>. We will process deletion within 30 days.</p>
