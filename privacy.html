@@ -38,7 +38,7 @@
 
 <div class="box">
   <h1>Privacy Policy for LogOut</h1>
-  <p><strong>Last updated:</strong> <span class="highlight">8 June 2026</span></p>
+  <p><strong>Last updated:</strong> <span class="highlight">26 June 2026</span></p>
   <p>LogOut is a habit-building iOS app designed to help you reduce mindless scrolling by locking your apps and requiring you to walk to unlock them. This policy explains what data we collect, why, and how it is protected.</p>
 </div>
 
@@ -62,9 +62,9 @@
     <tr><td>Session ID</td><td>A random UUID — not linked to you personally</td></tr>
     <tr><td>Date &amp; time</td><td>When the session occurred</td></tr>
     <tr><td>Duration &amp; elapsed time</td><td>How long the session was set for and how long you used the app</td></tr>
-    <tr><td>Step count</td><td>Steps walked to unlock (10 = completed)</td></tr>
+    <tr><td>Step count</td><td>Steps walked to unlock; meeting your step goal (10–100) completes the session</td></tr>
     <tr><td>Reaction time</td><td>Seconds between lock appearing and first step detected</td></tr>
-    <tr><td>Strict mode</td><td>Whether the full screen lock was active</td></tr>
+    <tr><td>Lock mode</td><td>Whether Instant Lock (immediate full block) was active for the session</td></tr>
     <tr><td>Loop broken</td><td>Whether you successfully walked out</td></tr>
     <tr><td>Device</td><td>"iPhone" — no device identifiers are stored</td></tr>
   </table>
@@ -74,7 +74,7 @@
     <tr><th>Field</th><th>Description</th></tr>
     <tr><td>Step goal</td><td>Your target steps per unlock walk (10–100)</td></tr>
     <tr><td>Session duration</td><td>How long your countdown timer is set to (minutes)</td></tr>
-    <tr><td>Mode preference</td><td>Whether Instant Lock or Standard mode is active</td></tr>
+    <tr><td>Mode preference</td><td>Whether Instant Lock or Delay Lock is active</td></tr>
     <tr><td>Daily scroll estimate</td><td>Your self-reported estimate of daily scroll time, entered during onboarding</td></tr>
     <tr><td>Selected goals</td><td>The habit goals you chose during onboarding (e.g. "Reading", "Exercise", "Focus"). Stored as a comma-separated list of goal labels</td></tr>
   </table>
@@ -93,12 +93,12 @@
     <tr><th>Permission</th><th>Why it's needed</th><th>Data shared externally?</th></tr>
     <tr>
       <td>Screen Time (FamilyControls)</td>
-      <td>Blocks selected app categories during or at the end of a session; walking the required steps restores access. In Focus Lock mode, blocking is enforced by a background system extension that stays active even if the App is closed. Your category preferences are stored locally as opaque Apple-issued tokens and are never transmitted externally</td>
+      <td>Blocks selected app categories during or at the end of a session; walking the required steps restores access. In Instant Lock mode, blocking is enforced by a background system extension that stays active even if the App is closed. Your category preferences are stored locally as opaque Apple-issued tokens and are never transmitted externally</td>
       <td>No</td>
     </tr>
     <tr>
       <td>Motion &amp; Fitness (CMPedometer)</td>
-      <td>Counts your steps using the iPhone's motion coprocessor to verify you've walked 10 steps</td>
+      <td>Counts your steps using the iPhone's motion coprocessor to verify you've walked your chosen step goal (10–100 steps)</td>
       <td>No</td>
     </tr>
     <tr>
@@ -123,7 +123,7 @@
     </tr>
     <tr>
       <td>Background Audio (AVAudioSession)</td>
-      <td>In standard (non-Focus-Lock) mode, LogOut plays a silent audio buffer while your session countdown runs. This keeps the app's timer active when you switch to another app, so apps are blocked the moment the countdown ends — even if LogOut is in the background. <strong>No sound is played</strong> (the buffer is pure silence), the microphone is never accessed, and your music or podcasts continue uninterrupted. No audio data is recorded or transmitted.</td>
+      <td>In Delay Lock mode (the non-Instant-Lock countdown), LogOut plays a silent audio buffer while your session countdown runs. This keeps the app's timer active when you switch to another app, so apps are blocked the moment the countdown ends — even if LogOut is in the background. <strong>No sound is played</strong> (the buffer is pure silence), the microphone is never accessed, and your music or podcasts continue uninterrupted. No audio data is recorded or transmitted.</td>
       <td>No</td>
     </tr>
   </table>
